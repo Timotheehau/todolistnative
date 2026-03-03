@@ -7,19 +7,22 @@ const TodoList = () => {
     const [editingId, setEditingId] = useState(null)
 
     const addTasks = () => {
+        // on empeche de mettre des espaces vides
         if (task.trim().length === 0) return
+        // le mode update
         if (editingId) {
             setTodoList(todoList.map(item =>
             item.id === editingId ? { ...item, name: task } : item
             ))
             setEditingId(null)
         } else {
+            // la création
             const newTask = {
                 id: Date.now().toString(),
                 name: task,
                 completed: false,
             }
-            setTodoList([...todoList, newTask])
+            setTodoList([newTask, ...todoList])
         }
         setTask('')
     }
@@ -29,6 +32,7 @@ const TodoList = () => {
         item.id === id ? {...item, completed: !item.completed } : item
         ))
     }
+    // ici on rend l'editingId à true
     const editTasks = (item) => {
         setTask(item.name)
         setEditingId(item.id)
